@@ -1,0 +1,13 @@
+name: mnd
+version: 0.1.0
+
+authors:
+  - David Backeus <duztdruid@gmail.com>
+
+targets:
+  mnd:
+    main: src/mnd.cr
+
+crystal: 0.23.1
+
+license: MIT
