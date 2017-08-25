@@ -1,10 +1,11 @@
-require "yaml"
+require "./local_config"
 require "./platforms"
 
 module Mnd
   class Repo
     def self.all
-      platform = "prime"
+      platform = LocalConfig.instance.current_platform
+
       PLATFORMS[platform]
     end
 
