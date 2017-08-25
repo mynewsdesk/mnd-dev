@@ -15,7 +15,12 @@ module Mnd
     ],
 
     "poptype" => {
-      Repo.new("mndx-web"),
+      Repo.new("mndx-analyze", color: :cyan, alias: "analyze"),
+      Repo.new("mndx-dashboard", color: :light_blue, alias: "dashboard"),
+      Repo.new("mndx-mailer", color: :green, alias: "mailer"),
+      Repo.new("mndx-web", color: :red, alias: "web"),
+      Repo.new("mndx-amqp", color: :light_red, alias: "amqp"),
+      Repo.new("mndx-mailer_client", color: :light_green, alias: "mailer_client"),
     }
   }
 end

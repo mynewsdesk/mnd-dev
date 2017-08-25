@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function header {
+  printf "\n== $1 ==\n"
+}
+
+header "Installing brew dependencies"
+brew update # bundle does not update automatically (unlike install / upgrade)
+brew bundle
