@@ -17,8 +17,8 @@ module Mnd
       if File.exists? dot_file
         @config = Hash(String, String).from_yaml(File.read(dot_file))
       else
-        Mnd.display.error "Please run 'mnd setup' to initialize your configuration file before use"
-        exit
+        @config = DEFAULT_CONFIG.dup
+        persist!
       end
     end
 
@@ -31,7 +31,7 @@ module Mnd
     end
 
     def root_path
-      @config["root_path"]
+      @config["root_path"]? || require_setup!
     end
 
     def root_path=(root)
@@ -44,6 +44,11 @@ module Mnd
 
     private def dot_file
       DOT_FILE_PATH
+    end
+
+    private def require_setup!
+      Mnd.display.error "Please run 'mnd setup' to initialize your configuration file before use"
+      exit
     end
   end
 end
