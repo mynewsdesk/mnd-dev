@@ -30,7 +30,7 @@ module Mnd
     end
 
     def root
-      @root ||= File.join File.expand_path("../", Mnd.root), name
+      @root ||= "#{LocalConfig.instance.root_path}/#{name}"
     end
 
     def short_name

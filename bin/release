@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function header {
+  printf "\n== $1 ==\n"
+}
+
+mkdir -p release
+
+header "Building binary"
+crystal build src/mnd.cr --release -o release/mnd
+
+header "Releasing to github"
+version=`release/mnd -v`
+printf "Creating release version $version\n"
+
+hub release create -a release/mnd -m "Version $version" $version

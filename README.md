@@ -1,16 +1,30 @@
 # MND-DEV
 
-Command line interface with install, update and quality of life functionality for all platform related mynewsdesk repos.
+Command line interface with install, update and quality of life functionality
+for all platform related mynewsdesk repos.
 
 ## Install
 
+The [dev computer](https://github.com/mynewsdesk/dev-computer/) script installs
+it for you but if you need to do it manually go to the
+[releases](https://github.com/mynewsdesk/mnd-dev/releases) page and download the
+latest `mnd` binary. Put it under `/usr/local/bin` and `chmod +x` it and you're done.
+
+Provided you have `jq` installed (`brew install jq`) you can paste this in your terminal:
+
 ```bash
-brew tap mynewsdesk/homebrew-tap
-brew install mnd
+curl -L `curl https://api.github.com/repos/mynewsdesk/mnd-dev/releases/latest | jq .assets[0].browser_download_url --raw-output` > /usr/local/bin/mnd
+chmod +x /usr/local/bin/mnd
 ```
 
-This is to enable usage of the `mnd` command on your computer.
-See below for development setup instructions.
+## Configuration
+
+Run `mnd setup` to configure where you want to install the repos etc. All settings
+will be stored in YAML format in `~/.mnd`.
+
+## Update
+
+To update to the latest version simply run `mnd update`.
 
 ## Usage
 
@@ -40,7 +54,6 @@ Check logs
 Usage:
     mnd logs # tails all logs
     mnd logs web create # tails logs from web and create
-    mnd l # use alias
 
     Note: currently, only the development.log is pulled.
 ```
@@ -48,26 +61,29 @@ Usage:
 ## Development setup
 
 Clone the repo and run `bin/setup`
-```bash
-cd ~/Projects
-git clone git@github.com:mynewsdesk/mnd-dev.git
-cd mnd-dev
-bundle install
-# Add below line to your ~/.bashrc or ~/.zshrc
-export PATH="$HOME/Projects/mnd-dev/bin:$PATH"
-```
+
+Then run `guardian` to auto-compile whenever you change any source files.
+
+Executable will be available as `bin/mnd` which you can run to test your
+changes before publishing.
+
+### Publish a new release
+
+Bump the version number in `src/mnd/version.cr` and run `bin/release`
+
+### Add a repo
+
+Add repos to the various platforms in `src/mnd/platforms.cr`.
 
 ### Add command
 
-Create your awesome command and put in `lib/mnd/commands`:
+Create a new command class in the `src/mnd/commands` directory:
 
 ```ruby
 module Mnd
-
-  # You can add documentation for command before the class define.
-  # The summary is one short sentence, which will appear in the help page
-  # The usage is the detail usage, which will appear in the help:awesome page
   class Commands::Awesome < Commands::Base
+    # The summary is one short sentence, which will appear in the help page
+    # The usage is the details, which will appear when running 'mnd help awesome'
     summary "An awesome command"
     usage <<-EOF
     mnd awesome # show how awesome it is
@@ -116,7 +132,3 @@ Parameters:
 * repo, Optional if you want to run cmd on an repo
 
 When repo is passed, it will cd to the root of repo then run the command.
-
-### Add a repo
-
-Add repos to the various platforms in `src/mnd/platforms.cr`.

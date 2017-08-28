@@ -7,7 +7,7 @@ DEFAULT_CONFIG = {
 module Mnd
   class LocalConfig
     INSTANCE = new
-    DOT_FILE_PATH = ENV.fetch("HOME") + "/.mnd-dev"
+    DOT_FILE_PATH = ENV.fetch("HOME") + "/.mnd"
 
     def self.instance
       INSTANCE
@@ -17,8 +17,8 @@ module Mnd
       if File.exists? dot_file
         @config = Hash(String, String).from_yaml(File.read(dot_file))
       else
-        @config = DEFAULT_CONFIG.dup
-        persist!
+        Mnd.display.error "Please run 'mnd setup' to initialize your configuration file before use"
+        exit
       end
     end
 
@@ -28,6 +28,14 @@ module Mnd
 
     def current_platform=(platform)
       @config["current_platform"] = platform
+    end
+
+    def root_path
+      @config["root_path"]
+    end
+
+    def root_path=(root)
+      @config["root_path"] = root
     end
 
     def persist!
