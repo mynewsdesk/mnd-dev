@@ -6,15 +6,10 @@ for all platform related mynewsdesk repos.
 ## Install
 
 The [dev computer](https://github.com/mynewsdesk/dev-computer/) script installs
-it for you but if you need to do it manually go to the
-[releases](https://github.com/mynewsdesk/mnd-dev/releases) page and download the
-latest `mnd` binary. Put it under `/usr/local/bin` and `chmod +x` it and you're done.
-
-Provided you have `jq` installed (`brew install jq`) you can paste this in your terminal:
+it for you but if you need to do it manually simply run:
 
 ```bash
-curl -L `curl https://api.github.com/repos/mynewsdesk/mnd-dev/releases/latest | jq .assets[0].browser_download_url --raw-output` > /usr/local/bin/mnd
-chmod +x /usr/local/bin/mnd
+brew install --HEAD mynewsdesk/tap/mnd
 ```
 
 ## Configuration
