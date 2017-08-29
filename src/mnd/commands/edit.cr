@@ -9,7 +9,7 @@ module Mnd
         return
       end
 
-      unless editor = ENV["EDITOR"]
+      unless editor = ENV["EDITOR"]?
         display.error "Can't edit without specifying the EDITOR env variable"
         return
       end
