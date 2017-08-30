@@ -5,23 +5,51 @@ module Mnd
 
     def perform
       config = LocalConfig.instance
+      default_path = config.root_path? || "~/code"
 
       display.info "Where do you want to install the mynewsdesk repos?"
-      loop do
-        print "root_path: (#{Dir.current}) "
-        answer = File.expand_path gets.not_nil!.chomp
+      print "root_path: (#{default_path}) "
 
-        if Dir.exists? answer
-          config.root_path = answer
-          break
+      answer = gets.not_nil!.chomp
+      path = answer.empty? ? default_path : File.expand_path(answer)
+
+      if Dir.exists? path
+        config.root_path = path
+      else
+        if yes?("The path #{path} doesn't exist, do you want to create it?")
+          begin
+            Dir.mkdir_p(path)
+            display.info "Directory successfully created!"
+          rescue e
+            display.error e.message
+            exit
+          end
+
+          config.root_path = path
         else
-          display.error "The path #{answer} doesn't exist, please provide an existing directory"
+          display.error "No root path configured!"
+          exit
         end
       end
 
       config.persist!
 
       display.info "All done!"
+    end
+
+    private def yes?(prompt)
+      loop do
+        print "#{prompt} [y/n] "
+        yes_or_no = gets.not_nil!.chomp
+
+        if yes_or_no[/y/i]?
+          return true
+        elsif yes_or_no[/n/i]?
+          return false
+        else
+          display.warn "Please answer [y]es or [n]o"
+        end
+      end
     end
   end
 end

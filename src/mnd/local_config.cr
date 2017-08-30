@@ -30,6 +30,10 @@ module Mnd
       @config["current_platform"] = platform
     end
 
+    def root_path?
+      @config["root_path"]?
+    end
+
     def root_path
       @config["root_path"]? || require_setup!
     end
