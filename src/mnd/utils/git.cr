@@ -4,7 +4,7 @@ module Mnd::Utils
       status = `cd #{dir} && git status --porcelain`
 
       !status.lines.find do |line|
-        line.strip[/^[MDA]/] # dirty files are "M"odified, "D"eleted or "A"dded
+        line.strip[/^[MDA]/]? # dirty files are "M"odified, "D"eleted or "A"dded
       end
     end
 

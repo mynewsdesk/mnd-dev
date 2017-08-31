@@ -8,8 +8,7 @@ module Mnd
 
     def perform
       if arguments.empty?
-        display.info "Current platform:"
-        display.info LocalConfig.instance.current_platform
+        display.info "Current platform: #{LocalConfig.instance.current_platform}"
         display.info
         display.info "Available platforms:"
         available_platforms.each { |platform| display.info platform }
@@ -21,8 +20,7 @@ module Mnd
           config.current_platform = desired_platform
           config.persist!
 
-          display.info "Set current platform to:"
-          display.info desired_platform
+          display.info "Set current platform to: #{desired_platform}"
         else
           display.error "\nERROR: '#{desired_platform}' is not an available platform"
           display.info

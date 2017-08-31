@@ -37,6 +37,10 @@ module Mnd
       @alias || @name.split("-").last
     end
 
+    def to_s
+      name
+    end
+
     def git
       "https://github.com/mynewsdesk/#{name}.git"
     end

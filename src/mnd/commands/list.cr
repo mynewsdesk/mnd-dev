@@ -6,9 +6,9 @@ module Mnd
     def perform
       Repo.all.each do |repo|
         if repo.exists?
-          display.info "#{repo.name} [#{repo.root}]"
+          display.info "#{repo} [#{repo.root}]"
         else
-          display.warn "#{repo.name} [not installed]"
+          display.warn "#{repo} [not installed]"
         end
       end
     end

@@ -10,8 +10,8 @@ module Mnd
       display.info "Where do you want to install the mynewsdesk repos?"
       print "root_path: (#{default_path}) "
 
-      answer = gets.not_nil!.chomp
-      path = answer.empty? ? default_path : File.expand_path(answer)
+      answer = gets.to_s.chomp
+      path = File.expand_path(answer.presence || default_path)
 
       if Dir.exists? path
         config.root_path = path
@@ -40,7 +40,7 @@ module Mnd
     private def yes?(prompt)
       loop do
         print "#{prompt} [y/n] "
-        yes_or_no = gets.not_nil!.chomp
+        yes_or_no = gets.to_s
 
         if yes_or_no[/y/i]?
           return true

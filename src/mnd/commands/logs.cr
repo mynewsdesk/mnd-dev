@@ -1,6 +1,6 @@
 module Mnd
   class Commands::Logs < Commands::Base
-    summary "Check logs"
+    summary "Tail logs"
     usage <<-EOF
       mnd logs # tail all logs
       mnd logs mynewsdesk media_monitor # tail logs from mynewsdesk and media_monitor
@@ -34,7 +34,7 @@ module Mnd
         files << file
       end
 
-      display.info "Tailing development logs from #{repos.map(&.short_name).join(", ")}"
+      display.info "Tailing development logs from #{repos.map(&.to_s).join(", ")}"
 
       loop do
         lines = files.map do |file|

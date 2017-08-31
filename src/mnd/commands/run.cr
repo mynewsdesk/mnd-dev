@@ -16,7 +16,7 @@ module Mnd
       command = arguments.join " "
 
       repos.each do |repo|
-        display.header repo.name
+        display.header repo
 
         run command, repo
       end
