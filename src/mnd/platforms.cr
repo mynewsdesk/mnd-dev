@@ -12,6 +12,8 @@ module Mnd
       Repo.new("apiary"),
       Repo.new("audience-api", color: :yellow),
       Repo.new("mnd-navigation", color: :yellow),
+      Repo.new("mnd-ui", color: :yellow),
+      Repo.new("mnd-publish-frontend", color: :yellow),
     ],
 
     "poptype" => {
