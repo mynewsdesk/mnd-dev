@@ -6,8 +6,14 @@ module Mnd
     mnd install mynewsdesk # Only install mynewsdesk
     EOF
 
-
     def perform
+      if arguments.size != selected_repos.size
+        not_repos = arguments - selected_repos.map &.name
+        plural = not_repos.size > 1
+        display.error "Repo#{'s' if plural} not found: #{not_repos.join(", ")}"
+        return
+      end
+
       repos = selected_repos.presence || Repo.all
       uninstalled_repos = repos.reject &.exists?
 
