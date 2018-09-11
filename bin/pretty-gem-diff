@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+# This script looks at the git diff of Gemfile.lock and pretty prints it
+
+class Diff
+  def initialize(filepath)
+    @lines = IO.popen("git diff --no-color #{filepath}").map do |line|
+      if line =~ /([\+\-])\s+([a-zA-Z_\-]*) \(([0-9\.]+)\)/
+        addition = $1 == "+"
+        name = $2
+        version = $3
+        GemfileLine.new(addition, name, version)
+      end
+    end.compact
+  end
+
+  def additions
+    @lines.select(&:addition?)
+  end
+
+  def subtractions
+    @lines.select(&:subtraction?)
+  end
+end
+
+GemfileLine = Struct.new(:addition, :name, :version) do
+  def addition?
+    addition
+  end
+
+  def subtraction?
+    !addition?
+  end
+end
+
+diff = Diff.new("Gemfile.lock")
+
+added = {}
+
+diff.additions.each do |gem_line|
+  added[gem_line.name] = {new_version: gem_line.version}
+end
+
+diff.subtractions.each do |gem_line|
+  if data = added[gem_line.name]
+    data[:old_version] = gem_line.version
+  end
+end
+
+added.each do |name, data|
+  old_version_prefix = "#{data[:old_version]} - " if data.has_key?(:old_version)
+  puts "#{name} (#{old_version_prefix}#{data[:new_version]})"
+end

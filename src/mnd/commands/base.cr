@@ -53,5 +53,22 @@ module Mnd
     def display
       Mnd.display
     end
+
+    def verify_repos_provided!
+      if selected_repos.empty?
+        display.error "ERROR: you need to provide at least one repository"
+        exit
+      end
+    end
+
+    def verify_repos_installed!
+      not_installed = selected_repos - selected_repos.select &.exists?
+
+      if not_installed.presence
+        display.error "ERROR: the following repos are not installed:"
+        display.info not_installed.map(&.name).join(", ").colorize(:yellow)
+        exit
+      end
+    end
   end
 end
