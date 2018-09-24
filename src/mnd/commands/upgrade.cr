@@ -7,7 +7,7 @@ module Mnd
     EOF
 
     def perform
-      repos = selected_repos.presence || Repo.all
+      repos = selected_repos.presence || Repo.all.select &.exists?
 
       Utils::Git.verify_clean_repos!(repos)
 
