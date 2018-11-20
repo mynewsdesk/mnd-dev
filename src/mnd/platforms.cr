@@ -13,6 +13,7 @@ module Mnd
       Repo.new("mnd-ui", color: :yellow, alias: "ui"),
       Repo.new("mnd-publish-frontend", color: :yellow, alias: "publish-frontend"),
       Repo.new("mnd-events-api", color: :yellow, alias: "events-api"),
+      Repo.new("mnd-reader-frontend", color: :pink, alias: "reader-frontend"),
     ],
 
     "poptype" => {
