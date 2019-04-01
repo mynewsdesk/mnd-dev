@@ -3,10 +3,8 @@ module Mnd
     "prime" => [
       Repo.new("mynewsdesk", color: :cyan),
       Repo.new("social-media-monitor", color: :green),
-      Repo.new("mnd-data", color: :cyan, alias: "data"),
       Repo.new("audience", color: :light_cyan, alias: "data"),
       Repo.new("lang-detector", color: :light_yellow),
-      Repo.new("apiary"),
       Repo.new("audience-api", color: :yellow),
       Repo.new("mnd-content-marketplace-backend", color: :yellow, alias: "content-marketplace-backend"),
       Repo.new("mnd-navigation", color: :yellow, alias: "navigation"),
