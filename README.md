@@ -99,8 +99,8 @@ end
 
 Get currently selected repos based on command line arguments.
 
-For example when running, `mnd logs mynewsdesk apiary` then the `selected_repos`
-will be `["mynewsdesk", "apiary"]`.
+For example when running, `mnd logs mynewsdesk audience` then the `selected_repos`
+will be `["mynewsdesk", "audience"]`.
 
 However if no apps are specified it returns an empty array so when running
 `mnd logs` the `selected_repos` will be `[]`. You might want to either display
