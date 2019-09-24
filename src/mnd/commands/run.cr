@@ -2,8 +2,8 @@ module Mnd
   class Commands::Run < Commands::Base
     summary "Run shell commands on multi-repos"
     usage <<-EOF
-    mndx run "bundle install" # run bundle install on all repos
-    mndx run web create "bundle update" # run on mndx-web and mndx-create
+    mnd run "bundle install" # run bundle install on all repos
+    mnd run web create "bundle update" # run on mndx-web and mndx-create
     EOF
 
     def perform
