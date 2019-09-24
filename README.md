@@ -66,7 +66,7 @@ changes before publishing.
 
 ### Publish a new release
 
-Bump the version number in `src/mnd/version.cr` and run `bin/release`
+Just merge your changes to master. Running `mnd update` will reinstall using the current HEAD.
 
 ### Add a repo
 
