@@ -14,8 +14,8 @@ module Mnd
     end
 
     def initialize
-      if File.exists? dot_file
-        @config = Hash(String, String).from_yaml(File.read(dot_file))
+      if File.exists? DOT_FILE_PATH
+        @config = Hash(String, String).from_yaml(File.read(DOT_FILE_PATH))
       else
         @config = DEFAULT_CONFIG.dup
         persist!
@@ -43,11 +43,7 @@ module Mnd
     end
 
     def persist!
-      File.write dot_file, @config.to_yaml
-    end
-
-    private def dot_file
-      DOT_FILE_PATH
+      File.write DOT_FILE_PATH, @config.to_yaml
     end
 
     private def require_setup!
