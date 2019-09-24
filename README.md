@@ -64,6 +64,8 @@ Then run `guardian` to auto-compile whenever you change any source files.
 Executable will be available as `bin/mnd` which you can run to test your
 changes before publishing.
 
+If you are getting the `library not found for -lssl` error when attempting to compile please patch your `LIBRARY_PATH` as explained in: https://github.com/brianmario/mysql2/issues/795#issuecomment-337006164
+
 ### Publish a new release
 
 Just merge your changes to master. Running `mnd update` will reinstall using the current HEAD.
