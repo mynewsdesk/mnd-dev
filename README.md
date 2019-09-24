@@ -35,22 +35,24 @@ edit            Open repo source in editor
 help            Helps you out!
 install         Install missing repos
 list            List all repos
-logs            Check logs
+logs            Tail logs
 platform        Get or set the current platform
 run             Run shell commands on multi-repos
+setup           Configures the mnd tool
+update          Self update
 upgrade         Upgrade all or given repos
 ```
 
 Check detail usage for one command `mnd help logs`:
 
 ```
-Check logs
+Tail logs
 
 Usage:
-    mnd logs # tails all logs
-    mnd logs web create # tails logs from web and create
+  mnd logs # tail all logs
+  mnd logs mynewsdesk media_monitor # tail logs from mynewsdesk and media_monitor
 
-    Note: currently, only the development.log is pulled.
+  Note: tails log/development.log where available
 ```
 
 ## Development setup
@@ -62,9 +64,11 @@ Then run `guardian` to auto-compile whenever you change any source files.
 Executable will be available as `bin/mnd` which you can run to test your
 changes before publishing.
 
+If you are getting the `library not found for -lssl` error when attempting to compile please patch your `LIBRARY_PATH` as explained in: https://github.com/brianmario/mysql2/issues/795#issuecomment-337006164
+
 ### Publish a new release
 
-Bump the version number in `src/mnd/version.cr` and run `bin/release`
+Just merge your changes to master. Running `mnd update` will reinstall using the current HEAD.
 
 ### Add a repo
 
