@@ -42,6 +42,18 @@ module Mnd
       @config["root_path"] = root
     end
 
+    def buildkite_api_token?
+      @config["buildkite_api_token"]?
+    end
+
+    def buildkite_api_token
+      @config["buildkite_api_token"]
+    end
+
+    def buildkite_api_token=(buildkite_api_token)
+      @config["buildkite_api_token"] = buildkite_api_token
+    end
+
     def persist!
       File.write DOT_FILE_PATH, @config.to_yaml
     end
