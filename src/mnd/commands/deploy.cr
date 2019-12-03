@@ -3,8 +3,9 @@ require "../api/buildkite"
 module Mnd
   class Commands::Deploy < Commands::Base
     summary "Deploy app to a server"
-    <<-EOF
+    usage <<-EOF
     mnd deploy # deploy current branch to a server (chosen interactively)
+    mnd deploy <deployment-target> # deploy current branch to the target (eg. mnd-staging)
     EOF
 
     def perform
@@ -15,18 +16,7 @@ module Mnd
 
       display.info "Deploying the '#{branch}' branch..."
 
-      available_deployment_targets.each_with_index do |target, i|
-        display.info "#{i + 1}. #{target["label"]}"
-      end
-
-      if available_deployment_targets.size == 1
-        deployment_target = available_deployment_targets[0]
-      else
-        print "Where would you like to deploy? [1..#{available_deployment_targets.size}] "
-
-        answer = gets.to_s.to_i
-        deployment_target = available_deployment_targets[answer - 1]
-      end
+      deployment_target = find_or_prompt_for_deployment_target
 
       display.info ""
       display.info "You're about to deploy the branch '#{branch}' to '#{deployment_target["label"]}'."
@@ -64,7 +54,35 @@ module Mnd
       end
     end
 
-    private def available_deployment_targets
+    private def find_or_prompt_for_deployment_target
+      deployment_target_argument = arguments.first?
+      available_deployment_targets = read_deployment_targets_from_pipeline_yml
+
+      if deployment_target_argument
+        deployment_target = available_deployment_targets.find do |target|
+          target["label"] == deployment_target_argument
+        end
+
+        return deployment_target if deployment_target
+
+        display.warn "No deployment target matched '#{deployment_target_argument}', refer to the list instead."
+      end
+
+      available_deployment_targets.each_with_index do |target, i|
+        display.info "#{i + 1}. #{target["label"]}"
+      end
+
+      if available_deployment_targets.size == 1
+        deployment_target = available_deployment_targets[0]
+      else
+        print "Where would you like to deploy? [1..#{available_deployment_targets.size}] "
+
+        answer = gets.to_s.to_i
+        deployment_target = available_deployment_targets[answer - 1]
+      end
+    end
+
+    private def read_deployment_targets_from_pipeline_yml
       unless File.exists?(".buildkite/pipeline.yml")
         display.error "Error: couldn't find a .buildkite/pipeline.yml file. Is this repo deployable?"
         exit 1
