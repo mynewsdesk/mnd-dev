@@ -60,7 +60,7 @@ module Mnd
 
       if deployment_target_argument
         deployment_target = available_deployment_targets.find do |target|
-          target["label"] == deployment_target_argument
+          target["value"] == deployment_target_argument
         end
 
         return deployment_target if deployment_target
