@@ -31,6 +31,7 @@ Usage: mnd COMMAND [repo1 repo2] [command-specific-options]
 Type 'mnd help COMMAND' for details of each command
 
 Available commands:
+deploy          Deploy app to a server
 edit            Open repo source in editor
 help            Helps you out!
 install         Install missing repos
