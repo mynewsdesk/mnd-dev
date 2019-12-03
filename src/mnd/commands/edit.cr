@@ -1,7 +1,7 @@
 module Mnd
   class Commands::Edit < Commands::Base
     summary "Open repo source in editor"
-    usage "mndx edit web # open mndx-web source in editor"
+    usage "mnd edit langdetect # open mnd-langdetect source in editor"
 
     def perform
       if selected_repos.empty?
