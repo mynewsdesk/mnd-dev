@@ -42,11 +42,11 @@ module Mnd::Api
       JSON.parse(response.body)
     end
 
-    def self.ensure_buildkite_api_token!
+    private def self.ensure_buildkite_api_token!
       prompt_for_buildkite_api_token unless LocalConfig.instance.buildkite_api_token?
     end
 
-    def self.prompt_for_buildkite_api_token
+    private def self.prompt_for_buildkite_api_token
       Mnd.display.info "Please copy / paste the Buildkite user's API Token from 1password to continue."
 
       config = LocalConfig.instance
