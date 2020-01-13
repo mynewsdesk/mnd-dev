@@ -6,8 +6,6 @@ module Mnd
       Repo.new("mnd-audience", color: :light_cyan, alias: "audience"),
       Repo.new("mnd-langdetect", color: :light_yellow),
       Repo.new("audience-api", color: :yellow),
-      Repo.new("mnd-content-marketplace-backend", color: :yellow, alias: "content-marketplace-backend"),
-      Repo.new("mnd-navigation", color: :yellow, alias: "navigation"),
       Repo.new("mnd-ui", color: :yellow, alias: "ui"),
       Repo.new("mnd-publish-frontend", color: :yellow, alias: "publish-frontend"),
       Repo.new("mnd-events-api", color: :yellow, alias: "events-api"),
