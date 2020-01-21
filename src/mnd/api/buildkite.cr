@@ -47,7 +47,7 @@ module Mnd::Api
     end
 
     private def self.prompt_for_buildkite_api_token
-      Mnd.display.info "Please copy / paste the Buildkite user's API Token from 1password to continue."
+      Mnd.display.info "Please copy / paste the Buildkite user's API Token from 1password to continue. If you have a personal account on Buildkite generate your own token at https://buildkite.com/user/api-access-tokens with the scopes read_builds, write_builds, read_pipelines, read_user instead."
 
       config = LocalConfig.instance
 
