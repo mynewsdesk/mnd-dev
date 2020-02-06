@@ -1,16 +1,16 @@
 module Mnd
   PLATFORMS = {
     "prime" => [
-      Repo.new("mynewsdesk", color: :cyan),
-      Repo.new("social-media-monitor", color: :green),
-      Repo.new("mnd-audience", color: :light_cyan, alias: "audience"),
-      Repo.new("mnd-langdetect", color: :light_yellow),
       Repo.new("audience-api", color: :yellow),
-      Repo.new("mnd-ui", color: :yellow, alias: "ui"),
-      Repo.new("mnd-publish-frontend", color: :yellow, alias: "publish-frontend"),
+      Repo.new("mnd-audience", color: :light_cyan, alias: "audience"),
       Repo.new("mnd-events-api", color: :yellow, alias: "events-api"),
-      Repo.new("mnd-track-backend", color: :light_red, alias: "track-backend"),
+      Repo.new("mnd-langdetect", color: :light_yellow, alias: "langdetect"),
+      Repo.new("mnd-publish-frontend", color: :yellow, alias: "publish-frontend"),
       Repo.new("mnd-reader-frontend", color: :pink, alias: "reader-frontend"),
+      Repo.new("mnd-track-backend", color: :light_red, alias: "track-backend"),
+      Repo.new("mnd-ui", color: :yellow, alias: "ui"),
+      Repo.new("mynewsdesk", color: :cyan),
+      Repo.new("social-media-monitor", color: :green, alias: "smm"),
     ],
 
     "poptype" => {
