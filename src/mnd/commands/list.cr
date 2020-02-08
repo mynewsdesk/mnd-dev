@@ -6,7 +6,7 @@ module Mnd
     def perform
       Repo.all.each do |repo|
         if repo.exists?
-          display.info "#{repo.name} [#{repo.root}]"
+          display.info "#{repo.name.colorize(repo.color || :default).underline} [#{repo.root}]"
         else
           display.warn "#{repo.name} [not installed]"
         end
