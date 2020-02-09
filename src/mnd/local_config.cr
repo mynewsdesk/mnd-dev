@@ -54,6 +54,66 @@ module Mnd
       @config["buildkite_api_token"] = buildkite_api_token
     end
 
+    def mixpanel_oauth_token
+     @config["mixpanel_oauth_token"]
+    end
+
+    def mixpanel_oauth_token?
+     @config["mixpanel_oauth_token"]?
+    end
+
+    def mixpanel_oauth_token=(token)
+     @config["mixpanel_oauth_token"] = token
+    end
+
+    def mixpanel_organization_project_api_secret_token
+     @config["mixpanel_organization_project_api_secret_token"]
+    end
+
+    def mixpanel_organization_project_api_secret_token?
+     @config["mixpanel_organization_project_api_secret_token"]?
+    end
+
+    def mixpanel_organization_project_api_secret_token=(token)
+     @config["mixpanel_organization_project_api_secret_token"] = token
+    end
+
+    def mixpanel_organization_project_api_project_token
+     @config["mixpanel_organization_project_api_project_token"]
+    end
+
+    def mixpanel_organization_project_api_project_token?
+     @config["mixpanel_organization_project_api_project_token"]?
+    end
+
+    def mixpanel_organization_project_api_project_token=(token)
+     @config["mixpanel_organization_project_api_project_token"] = token
+    end
+
+    def mixpanel_user_project_api_secret_token
+     @config["mixpanel_user_project_api_secret_token"]
+    end
+
+    def mixpanel_user_project_api_secret_token?
+     @config["mixpanel_user_project_api_secret_token"]?
+    end
+
+    def mixpanel_user_project_api_secret_token=(token)
+     @config["mixpanel_user_project_api_secret_token"] = token
+    end
+
+    def mixpanel_user_project_api_project_token
+     @config["mixpanel_user_project_api_project_token"]
+    end
+
+    def mixpanel_user_project_api_project_token?
+     @config["mixpanel_user_project_api_project_token"]?
+    end
+
+    def mixpanel_user_project_api_project_token=(token)
+     @config["mixpanel_user_project_api_project_token"] = token
+    end
+
     def persist!
       File.write DOT_FILE_PATH, @config.to_yaml
     end

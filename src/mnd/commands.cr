@@ -1,5 +1,6 @@
 require "./commands/base"
 require "./commands/*"
+require "./commands/gdpr/*"
 
 module Mnd
   module Commands
