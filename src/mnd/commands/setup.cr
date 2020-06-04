@@ -7,7 +7,7 @@ module Mnd
       check_prerequisites!
 
       config = LocalConfig.instance
-      default_path = config.root_path? || "~/code"
+      default_path = config.root_path? || "#{ENV.fetch("HOME")}/code"
 
       display.info "Where do you want to install the mynewsdesk repos?"
       print "root_path: (#{default_path}) "
