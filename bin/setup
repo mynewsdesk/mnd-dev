@@ -6,4 +6,4 @@ function header {
 
 header "Installing brew dependencies"
 brew update # bundle does not update automatically (unlike install / upgrade)
-brew bundle
+brew bundle --no-lock
