@@ -37,6 +37,7 @@ help            Helps you out!
 install         Install missing repos
 list            List all repos
 logs            Tail logs
+open            Conveniently opens services based on repository context
 platform        Get or set the current platform
 run             Run shell commands on multi-repos
 setup           Configures the mnd tool
