@@ -17,6 +17,10 @@ brew install --HEAD mynewsdesk/tap/mnd
 Run `mnd setup` to configure where you want to install the repos etc. All settings
 will be stored in YAML format in `~/.mnd`.
 
+After running setup you can install all the Mynewsdesk repos with `mnd install`. If you prefer to install only specific repositories you can run `mnd list` to get a list of all repos and then `mnd install <repo-name>` to install them one by one.
+
+Please have a look at the Usage section below to get familiar with all available commands (`mnd deploy` is pretty great, for example).
+
 ## Update
 
 To update to the latest version simply run `mnd update`.
