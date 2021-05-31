@@ -2,9 +2,10 @@ module Mnd
   class Commands::Open < Commands::Base
     summary "Conveniently opens services based on repository context"
     usage <<-EOF
-	    mnd open buildkite # opens repo/branch in buildkite
-	    mnd open github # opens repo in github
-	    mnd open rollbar # opens repo in rollbar
+      mnd open buildkite # opens repo/branch in buildkite
+      mnd open github # opens repo in github
+      mnd open pr # opens pull request for the current branch
+      mnd open rollbar # opens repo in rollbar
 	  EOF
 
     def perform
@@ -29,6 +30,7 @@ module Mnd
       when "buildkite" then system("open https://buildkite.com/mynewsdesk/#{current_repo}/builds?branch=#{current_branch}")
       when "github"    then system("open https://github.com/mynewsdesk/#{current_repo}")
       when "rollbar"   then system("open https://rollbar.com/mynewsdesk/#{current_repo}")
+      when "pr"        then system("gh pr view --web || gh pr create --web")
       else
         display.error "Error: Didn't recognize the '#{service}' service, run 'mnd help open' for a list of valid options"
       end
