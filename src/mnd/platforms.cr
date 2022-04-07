@@ -9,7 +9,6 @@ module Mnd
       Repo.new("mnd-publish-tracking", color: :light_blue, alias: "publish-tracking"),
       Repo.new("mnd-reader-frontend", color: :pink, alias: "reader-frontend"),
       Repo.new("mnd-track-backend", color: :light_red, alias: "track-backend"),
-      Repo.new("mnd-ui", color: :yellow, alias: "ui"),
       Repo.new("mynewsdesk", color: :cyan),
       Repo.new("social-media-monitor", color: :green, alias: "smm"),
     ],
