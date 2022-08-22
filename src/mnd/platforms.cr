@@ -1,7 +1,6 @@
 module Mnd
   PLATFORMS = {
     "prime" => [
-      Repo.new("audience-api", color: :yellow),
       Repo.new("mnd-audience", color: :light_cyan, alias: "audience"),
       Repo.new("mnd-events-api", color: :yellow, alias: "events-api"),
       Repo.new("mnd-langdetect", color: :light_yellow, alias: "langdetect"),
