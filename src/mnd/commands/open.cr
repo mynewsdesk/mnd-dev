@@ -27,10 +27,16 @@ module Mnd
       current_branch = Mnd::Utils::Git.current_branch
 
       case service
-      when "buildkite" then system("open https://buildkite.com/mynewsdesk/#{current_repo}/builds?branch=#{current_branch}")
-      when "github"    then system("open https://github.com/mynewsdesk/#{current_repo}")
-      when "rollbar"   then system("open https://rollbar.com/mynewsdesk/#{current_repo}")
-      when "pr"        then system("gh pr view --web || gh pr create --web")
+      when "buildkite"
+        system("open https://buildkite.com/mynewsdesk/#{current_repo}/builds?branch=#{current_branch}")
+      when "github"
+        system("open https://github.com/mynewsdesk/#{current_repo}")
+      when "github-actions", "ga", "actions"
+        system("open https://github.com/mynewsdesk/#{current_repo}/actions?query=branch:#{current_branch}")
+      when "rollbar"
+        system("open https://rollbar.com/mynewsdesk/#{current_repo}")
+      when "pr"
+        system("gh pr view --web || gh pr create --web")
       else
         display.error "Error: Didn't recognize the '#{service}' service, run 'mnd help open' for a list of valid options"
       end
