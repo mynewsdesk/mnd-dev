@@ -42,16 +42,16 @@ module Mnd
       @config["root_path"] = root
     end
 
-    def buildkite_api_token?
-      @config["buildkite_api_token"]?
+    def github_api_token?
+      @config["github_api_token"]?
     end
 
-    def buildkite_api_token
-      @config["buildkite_api_token"]
+    def github_api_token
+      @config["github_api_token"]
     end
 
-    def buildkite_api_token=(buildkite_api_token)
-      @config["buildkite_api_token"] = buildkite_api_token
+    def github_api_token=(github_api_token)
+      @config["github_api_token"] = github_api_token
     end
 
     def persist!
