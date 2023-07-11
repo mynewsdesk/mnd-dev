@@ -65,7 +65,7 @@ Usage:
 
 Clone the repo and run `bin/setup`
 
-Then run `guardian` to auto-compile whenever you change any source files.
+Run `crystal build ./src/mnd.cr -o bin/mnd` to build the executable.
 
 Executable will be available as `bin/mnd` which you can run to test your
 changes before publishing.

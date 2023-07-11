@@ -1,5 +1,0 @@
-files: ./**/*.cr
-run: crystal build ./src/mnd.cr -o bin/mnd
----
-files: ./shard.yml
-run: crystal deps
