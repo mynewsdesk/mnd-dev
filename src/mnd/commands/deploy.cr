@@ -1,4 +1,4 @@
-require "../api/buildkite"
+require "../api/github"
 
 module Mnd
   class Commands::Deploy < Commands::Base
@@ -17,15 +17,13 @@ module Mnd
       # originally conceived for QA consultants not employed at mynewsdesk. It is more brittle
       # than normal usage since we're unable to validate input to the same extent.
       if arguments.size == 3
-        repo, branch, deployment_target_argument = arguments
-        pipeline_slug = "#{repo}-deploy"
-        verify_pipeline_exists! pipeline_slug
+        repository, branch, deployment_target_argument = arguments
 
-        deployment_target = { "label" => deployment_target_argument, "value" => deployment_target_argument }
+        deployment_target = deployment_target_argument
       else
-        pipeline_slug = deploy_pipeline_slug_from_path
+        repository = Dir.current.split("/").last
+
         branch = Mnd::Utils::Git.current_branch
-        verify_pipeline_exists! pipeline_slug
         Mnd::Utils::Git.verify_remote_branch_up_to_date!(branch)
 
         deployment_target_argument = arguments[0] if arguments.size == 1
@@ -36,21 +34,23 @@ module Mnd
       display.info "Deploying the '#{branch}' branch..."
 
       display.info ""
-      display.info "You're about to deploy the branch '#{branch}' to '#{deployment_target["label"]}'."
+      display.info "You're about to deploy the branch '#{branch}' to '#{deployment_target}'."
       print "Do you want to continue? [y/N] "
 
       confirmation = gets.to_s
 
       if confirmation[/^y/i]?
-        json = Api::Buildkite.create_build(
-          pipeline_slug: pipeline_slug,
-          branch: branch,
-          deployment_target: deployment_target["value"],
+        Api::Github.workflow_dispatch!(
+          owner: "mynewsdesk",
+          repository: repository,
+          workflow_id: "deploy.yml",
+          ref: branch,
+          inputs: { "deployment_target" => deployment_target },
         )
 
         display.info ""
-        display.info "Deploy build created at Buildkite:"
-        display.info json["web_url"]
+        display.info "Deploy workflow triggered at Github."
+        display.info "Navigate to https://github.com/mynewsdesk/#{repository}/actions to find the job and see the progress."
       else
         display.info "Aborted."
         exit
@@ -62,23 +62,12 @@ module Mnd
       "#{current_dir}-deploy"
     end
 
-    private def verify_pipeline_exists!(pipeline_slug)
-      json = Api::Buildkite.get_pipeline(pipeline_slug)
-
-      if json["slug"]?
-        json["slug"]
-      else
-        display.error "Error: It appears your repository doesn't correspond with a Buildkite deploy pipeline (looked for '#{pipeline_slug}' but found nothing)"
-        exit 1
-      end
-    end
-
     private def find_or_prompt_for_deployment_target(deployment_target_argument : String?)
-      available_deployment_targets = read_deployment_targets_from_pipeline_yml
+      available_deployment_targets = read_deployment_targets_from_github_deploy_yml
 
       if deployment_target_argument
         deployment_target = available_deployment_targets.find do |target|
-          target["value"] == deployment_target_argument
+          target == deployment_target_argument
         end
 
         return deployment_target if deployment_target
@@ -87,7 +76,7 @@ module Mnd
       end
 
       available_deployment_targets.each_with_index do |target, i|
-        display.info "#{i + 1}. #{target["label"]}"
+        display.info "#{i + 1}. #{target}"
       end
 
       if available_deployment_targets.size == 1
@@ -100,34 +89,29 @@ module Mnd
       end
     end
 
-    private def read_deployment_targets_from_pipeline_yml
-      unless File.exists?(".buildkite/pipeline.yml")
-        display.error "Error: couldn't find a .buildkite/pipeline.yml file. Is this repo deployable?"
+    private def read_deployment_targets_from_github_deploy_yml
+      unless File.exists?(".github/workflows/deploy.yml")
+        display.error "Error: couldn't find a .github/workflows/deploy.yml file. Is this repo deployable?"
         exit 1
       end
 
-      pipeline_yaml = File.read(".buildkite/pipeline.yml")
-      pipeline = YAML.parse(pipeline_yaml)
+      deploy_yaml = File.read(".github/workflows/deploy.yml")
+      workflow = YAML.parse(deploy_yaml)
 
-      field = deployment_target_field(pipeline)
+      deployment_target_node = deployment_target_node(workflow)
 
-      if field
-        field["options"].as_a
+      if deployment_target_node
+        deployment_target_node["options"].as_a
       else
-        display.error "Error: couldn't find a deployment-target field in .buildkite/pipeline.yml. Is this repo deployable?"
+        display.error "Error: couldn't find a on.workflow_dispatch.inputs.deployment_target field in .github/workflows/deploy. Is this repo deployable?"
         exit 1
       end
     end
 
-    private def deployment_target_field(pipeline)
-      pipeline["steps"].as_a.each do |step|
-        next if step.raw.is_a? String # "wait" step is a plain String
+    private def deployment_target_node(workflow)
+      return unless on = workflow[true]? || workflow["on"]?
 
-        step = step.as_h
-        step.has_key?("fields") && step["fields"].as_a.each do |field|
-          return field if field["key"] == "deployment-target"
-        end
-      end
+      on.dig?("workflow_dispatch", "inputs", "deployment_target")
     end
   end
 end
