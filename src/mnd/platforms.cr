@@ -5,7 +5,6 @@ module Mnd
       Repo.new("mnd-events-api", color: :yellow, alias: "events-api"),
       Repo.new("mnd-langdetect", color: :light_yellow, alias: "langdetect"),
       Repo.new("mnd-publish-frontend", color: :yellow, alias: "publish-frontend"),
-      Repo.new("mnd-publish-tracking", color: :light_blue, alias: "publish-tracking"),
       Repo.new("mnd-reader-frontend", color: :pink, alias: "reader-frontend"),
       Repo.new("mnd-track-backend", color: :light_red, alias: "track-backend"),
       Repo.new("mynewsdesk", color: :cyan),
